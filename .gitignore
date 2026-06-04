@@ -5,3 +5,5 @@ node_modules
 ### Сборки
 # Бандлеры
 dist
+# Сгенерированный код
+generated
