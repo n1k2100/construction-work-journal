@@ -13,6 +13,7 @@ import {
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger'
+import { PaginationParameters } from 'shared'
 
 import { DeletionsBodyDto, PaginationQueryDto } from '../dto'
 import {
@@ -21,7 +22,6 @@ import {
   EmployeePatchDto,
 } from '../dto/employee.dto'
 import { EmployeeService } from '../services'
-import { PaginationParameters } from '../types'
 
 @Controller()
 export class EmployeesController {
@@ -29,7 +29,7 @@ export class EmployeesController {
 
   @Get('employees')
   @ApiOperation({
-    summary: 'Получение страницы c работниками.',
+    summary: 'Получение страницы работников.',
   })
   @ApiOkResponse({
     description: 'Результат получен успешно.',
@@ -51,13 +51,24 @@ export class EmployeesController {
   }
 
   @Post('employees/create')
+  @ApiOperation({
+    summary: 'Добавление нового работника.',
+  })
+  @ApiOkResponse({
+    description: 'Добавление прошло успешно.',
+    type: EmployeeDto,
+  })
   createEmployee(@Body() body: EmployeeCreateDto) {
     return this.employeeService.createEmployee(body)
   }
 
   @Patch('employees/edit')
   @ApiOperation({
-    summary: 'Обновление информации о сотруднике.',
+    summary: 'Редактирование сотрудника по его ID.',
+  })
+  @ApiOkResponse({
+    description: 'Редактирование прошло успешно.',
+    type: EmployeeDto,
   })
   patchEmployee(@Body() body: EmployeePatchDto) {
     return this.employeeService.patchEmployees(body)
@@ -65,7 +76,7 @@ export class EmployeesController {
 
   @Delete('employees/delete')
   @ApiOperation({
-    summary: 'Удаление сотрудников.',
+    summary: 'Удаление сотрудников по их ID.',
   })
   deleteEmployees(@Body() body: DeletionsBodyDto) {
     return this.employeeService.deleteEmployees(body)

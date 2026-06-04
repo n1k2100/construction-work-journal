@@ -45,14 +45,14 @@ export class EmployeeService {
     })
   }
 
-  deleteEmployees(ids: DeletionsById) {
+  deleteEmployees(parameters: DeletionsById) {
     return this.prisma.employee.updateMany({
       data: {
         deletedAt: new Date(),
       },
       where: {
         id: {
-          in: ids,
+          in: parameters.ids,
         },
       },
     })

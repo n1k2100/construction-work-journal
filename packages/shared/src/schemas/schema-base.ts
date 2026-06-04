@@ -17,7 +17,9 @@ export const paginationSchema = z.object({
     .describe('Количество возвращаемых записей'),
 })
 
-export const deletionsByIdSchema = z.array(z.uuid())
+export const deletionsByIdSchema = z.object({
+  ids: z.array(z.uuid()),
+})
 
 export type PaginationParameters = output<typeof paginationSchema>
 export type DeletionsById = output<typeof deletionsByIdSchema>

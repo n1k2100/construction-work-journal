@@ -57,14 +57,14 @@ export class WorkService {
     }
   }
 
-  deleteWorks(deletionsId: DeletionsById) {
+  deleteWorks(parameters: DeletionsById) {
     return this.prisma.work.updateMany({
       data: {
         deletedAt: new Date(),
       },
       where: {
         id: {
-          in: deletionsId,
+          in: parameters.ids,
         },
       },
     })

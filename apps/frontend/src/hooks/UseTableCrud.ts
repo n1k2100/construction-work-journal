@@ -131,7 +131,7 @@ export function useTableCrud<T extends { id: React.Key }>({
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(idsToDelete),
+      body: JSON.stringify({ ids: idsToDelete }),
     })
       .then((response) => {
         if (response.ok) {

@@ -24,7 +24,6 @@ import {
   WorkPatchDto,
 } from '../dto'
 import { WorkService } from '../services/work.service'
-import { PaginationParameters } from '../types'
 
 @Controller()
 export class WorksController {
@@ -32,7 +31,7 @@ export class WorksController {
 
   @Get('works')
   @ApiOperation({
-    summary: 'Получение страницы c работами.',
+    summary: 'Получение страницы работ.',
   })
   @ApiOkResponse({
     description: 'Результат получен успешно.',
@@ -57,16 +56,33 @@ export class WorksController {
   }
 
   @Post('works/create')
+  @ApiOperation({
+    summary: 'Создание новой работы.',
+  })
+  @ApiOkResponse({
+    description: 'Добавление прошло успешно.',
+    type: WorkDto,
+  })
   createWork(@Body() body: WorkCreateDto) {
     return this.workService.createWork(body)
   }
 
   @Patch('works/edit')
+  @ApiOkResponse({
+    description: 'Редактирование прошло успешно.',
+    type: WorkDto,
+  })
+  @ApiOperation({
+    summary: 'Редактирование существующей работы по её ID.',
+  })
   editWork(@Body() body: WorkPatchDto) {
     return this.workService.patchWork(body)
   }
 
   @Delete('works/delete')
+  @ApiOperation({
+    summary: 'Удаление существующих работ по их ID.',
+  })
   deleteWorks(@Body() body: DeletionsBodyDto) {
     return this.workService.deleteWorks(body)
   }

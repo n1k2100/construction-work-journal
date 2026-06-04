@@ -45,14 +45,14 @@ export class WorksTypeService {
     })
   }
 
-  deleteWorksType(ids: DeletionsById) {
+  deleteWorksType(parameters: DeletionsById) {
     return this.prisma.workType.updateMany({
       data: {
         deletedAt: new Date(),
       },
       where: {
         id: {
-          in: ids,
+          in: parameters.ids,
         },
       },
     })
