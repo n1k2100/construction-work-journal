@@ -44,8 +44,6 @@ export class WorksController {
     description: 'Ошибка на стороне сервера.',
   })
   getWorks(@Query() query: WorkPaginationDto) {
-    console.log(query)
-
     const parameters: WorkPagination = {
       orderBy: query.orderBy ?? {},
       skip: query.skip ?? 0,
