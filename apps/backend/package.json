@@ -32,7 +32,6 @@
     "@nestjs/core": "^11.1.24",
     "@nestjs/platform-express": "^11.1.24",
     "@prisma/adapter-mariadb": "^7.8.0",
-    "@prisma/client": "^7.8.0",
     "dayjs": "^1.11.21",
     "nestjs-zod": "^5.4.0",
     "reflect-metadata": "^0.2.2",
