@@ -55,7 +55,7 @@ export class WorksTypeController {
     type: WorkTypeDto,
   })
   updateWorkType(@Body() body: WorkTypePatchDto) {
-    return this.updateWorkType(body)
+    return this.worksTypeService.patchWorkType(body)
   }
 
   @Delete('works-type/delete')
