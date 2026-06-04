@@ -1,9 +1,21 @@
 import { useState, useEffect, useCallback } from 'react'
 
+type Pagination = {
+  current: number
+  pageSize: number
+}
+
+type Sorter = {
+  field: string
+  order: 'asc' | 'desc' | 'ascend'
+}
+
+type OrderBy = Record<string, 'asc' | 'desc'>
+
 function appendNestedParams(
   params: URLSearchParams,
   prefix: string,
-  value: any,
+  value: object,
 ) {
   if (value && typeof value === 'object') {
     Object.entries(value).forEach(([key, val]) => {
@@ -18,12 +30,12 @@ function buildOrderBy(field: string | string[], order: 'asc' | 'desc') {
   if (Array.isArray(field)) {
     return field.reduceRight((acc, key, index) => {
       if (index === field.length - 1) {
-        return { [key]: order }
+        return { [key]: order } as OrderBy
       }
-      return { [key]: acc }
-    }, {} as any)
+      return { [key]: acc } as unknown as OrderBy
+    }, {} as OrderBy)
   }
-  return { [field]: order }
+  return { [field]: order } as Record<string, 'asc' | 'desc'>
 }
 
 interface UseTableCrudOptions {
@@ -47,21 +59,17 @@ export function useTableCrud<T extends { id: React.Key }>({
   const [isUpsertModalOpen, setIsUpsertModalOpen] = useState(false)
   const [editingRecord, setEditingRecord] = useState<T | null>(null)
 
-  // Новое состояние для хранения настроек сортировки
-  const [orderBy, setOrderBy] = useState<any>(undefined)
+  const [orderBy, setOrderBy] = useState<OrderBy | undefined>(undefined)
 
   const loadData = useCallback(
     (page: number, size: number) => {
-      setLoading(true)
       const skip = (page - 1) * size
       const take = size
 
-      // Используем конструктор URL для безопасного формирования query-параметров
       const url = new URL(fetchUrl, window.location.origin)
       url.searchParams.append('skip', String(skip))
       url.searchParams.append('take', String(take))
 
-      // Если задана сортировка, сериализуем ее в параметры запроса
       if (orderBy) {
         appendNestedParams(url.searchParams, 'orderBy', orderBy)
       }
@@ -92,7 +100,9 @@ export function useTableCrud<T extends { id: React.Key }>({
   }, [current, pageSize, orderBy, loadData])
 
   const handleTableChange = useCallback(
-    (pagination: any, _filters: any, sorter: any) => {
+    (pagination: Pagination, sorter: Sorter) => {
+      setLoading(true)
+
       if (pagination.current && pagination.pageSize) {
         setCurrent(pagination.current)
         setPageSize(pagination.pageSize)
@@ -164,6 +174,7 @@ export function useTableCrud<T extends { id: React.Key }>({
   }, [])
 
   const refresh = useCallback(() => {
+    setLoading(true)
     loadData(current, pageSize)
   }, [current, pageSize, loadData])
 
