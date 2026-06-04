@@ -2,7 +2,7 @@ import { WorkVolumeUnit } from '@construction-work-journal/prisma/enums'
 import z, { type output } from 'zod'
 
 export const WorkTypeSchema = z.object({
-  color: z.hex(),
+  color: z.hex().max(6).min(6),
   deletedAt: z.iso.date().optional(),
   id: z.uuid(),
   title: z.string(),
