@@ -1,0 +1,18 @@
+{
+  "name": "shared",
+  "type": "module",
+  "main": "./src/index.ts",
+  "private": true,
+  "version": "1.0.0",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@construction-work-journal/prisma": "workspace:*",
+    "zod": "^4.4.3"
+  }
+}
