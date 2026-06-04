@@ -1,0 +1,32 @@
+{
+  "name": "@construction-work-journal/prisma",
+  "version": "1.0.0",
+  "private": true,
+  "files": [
+    "./schema.prisma"
+  ],
+  "exports": {
+    "./schema": {
+      "default": "./schema.prisma"
+    },
+    "./client": {
+      "default": "./src/generated/prisma/client.ts",
+      "types": "./src/generated/prisma/client.ts"
+    },
+    "./models": {
+      "default": "./src/generated/prisma/models.ts",
+      "types": "./src/generated/prisma/models.ts"
+    },
+    "./enums": {
+      "default": "./src/generated/prisma/enums.ts",
+      "types": "./src/generated/prisma/enums.ts"
+    }
+  },
+  "type": "module",
+  "devDependencies": {
+    "prisma": "^7.8.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.8.0"
+  }
+}

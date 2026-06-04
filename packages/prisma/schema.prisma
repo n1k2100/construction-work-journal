@@ -1,0 +1,97 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "./src/generated/prisma"
+  importFileExtension = "ts"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+/// Работы
+model Work {
+  /// Идентификатор
+  id         String    @id @default(uuid())
+  /// Дата завершения работ
+  date       DateTime
+  /// Тип
+  type       WorkType  @relation(fields: [typeId], references: [id])
+  /// Объём работ
+  volume     Float
+  /// Идентификатор типа
+  typeId     String
+  /// Сотрудник
+  employee   Employee  @relation(fields: [employeeId], references: [id])
+  /// Идентификатор сотрудника
+  employeeId String
+  /// Дата занесения записи
+  createdAt  DateTime  @default(now())
+  /// Дата обновления записи
+  updatedAt  DateTime  @updatedAt
+  /// Дата удаления записи
+  deletedAt  DateTime?
+}
+
+/// Перечисление должностей сотрудников
+enum EmployeePosition {
+  /// Работник
+  worker
+  /// Бригадир
+  foreman
+}
+
+/// Сотрудник
+model Employee {
+  /// Идентификатор
+  id        String           @id @default(uuid())
+  /// Должность
+  position  EmployeePosition
+  /// ФИО
+  fullName  String
+  /// Работы, где задействовался сотрудник
+  works     Work[]
+  /// Дата занесения записи
+  createdAt DateTime         @default(now())
+  /// Дата обновления записи
+  updatedAt DateTime         @updatedAt
+  /// Дата удаления записи
+  deletedAt DateTime?
+}
+
+/// Единицы измерения работы
+enum WorkVolumeUnit {
+  /// Кубометры
+  M3
+  /// Квадратные метры
+  M2
+  /// Метры
+  M
+  /// Штука
+  PCS
+  /// Тонна
+  TN
+  /// Килограмм
+  KG
+  /// Комплект
+  SET
+}
+
+/// Виды работ
+model WorkType {
+  /// Идентификатор
+  id        String         @id @default(uuid())
+  /// Наименование
+  title     String         @unique
+  /// Цвет
+  color     String
+  /// Единица измерения
+  unit      WorkVolumeUnit
+  /// Работы данного типа
+  works     Work[]
+  /// Дата занесения записи
+  createdAt DateTime       @default(now())
+  /// Дата обновления записи
+  updatedAt DateTime       @updatedAt
+  /// Дата удаления записи
+  deletedAt DateTime?
+}
