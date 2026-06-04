@@ -6,6 +6,7 @@ import { useTableCrud } from '../../hooks/UseTableCrud'
 import { CrudTableLayout } from '../../components/CrudTableLayout/CrudTableLayout'
 import { getRowNumberColumn } from '../../utils'
 import { POSITION_LABELS } from '../../constants'
+import { EmployeeUpsertModal } from '../../components'
 
 export function PageEmployee() {
   const tableState = useTableCrud<Employee>({
@@ -13,7 +14,16 @@ export function PageEmployee() {
     deleteUrl: 'http://localhost:3990/api/employees/delete',
   })
 
-  const { current, pageSize, openDeleteModal } = tableState
+  const {
+    current,
+    pageSize,
+    openDeleteModal,
+    openUpsertModal,
+    isUpsertModalOpen,
+    editingRecord,
+    closeUpsertModal,
+    refresh,
+  } = tableState
 
   const columns = useMemo<TableProps<Employee>['columns']>(
     () => [
@@ -34,29 +44,45 @@ export function PageEmployee() {
       {
         title: 'Действия',
         align: 'center',
-        width: 100,
         render: (_, record) => (
           <Space>
             <Button
               type='primary'
               icon={<EditOutlined />}
               title='Редактировать'
+              onClick={() => openUpsertModal(record)}
             />
-            {!record.deletedAt && (
-              <Button
-                danger
-                type='primary'
-                icon={<DeleteOutlined />}
-                title='Удалить'
-                onClick={() => openDeleteModal([record.id])}
-              />
-            )}
+            <Button
+              danger
+              type='primary'
+              icon={<DeleteOutlined />}
+              title='Удалить'
+              onClick={() => openDeleteModal([record.id])}
+            />
           </Space>
         ),
       },
     ],
-    [current, pageSize, openDeleteModal],
+    [current, pageSize, openUpsertModal, openDeleteModal],
   )
 
-  return <CrudTableLayout tableState={tableState} columns={columns} />
+  return (
+    <>
+      <CrudTableLayout
+        tableState={tableState}
+        columns={columns}
+        extraHeaderActions={
+          <Button type='primary' onClick={() => openUpsertModal()}>
+            Добавить работника
+          </Button>
+        }
+      />
+      <EmployeeUpsertModal
+        open={isUpsertModalOpen}
+        editingRecord={editingRecord}
+        onClose={closeUpsertModal}
+        onSuccess={refresh}
+      />
+    </>
+  )
 }
