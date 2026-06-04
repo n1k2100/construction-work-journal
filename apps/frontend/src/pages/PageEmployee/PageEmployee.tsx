@@ -1,17 +1,18 @@
 import { useMemo } from 'react'
 import { Button, Space, type TableProps } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import type { Employee } from 'shared'
-import { useTableCrud } from '../../hooks/UseTableCrud'
-import { CrudTableLayout } from '../../components/CrudTableLayout/CrudTableLayout'
+
+import { useTableCrud } from '../../hooks'
 import { getRowNumberColumn } from '../../utils'
-import { POSITION_LABELS } from '../../constants'
-import { EmployeeUpsertModal } from '../../components'
+import { POSITION_LABELS, URL_API_EMPLOYEE } from '../../constants'
+import { CrudTableLayout, EmployeeUpsertModal } from '../../components'
+
+import type { Employee } from 'shared'
 
 export function PageEmployee() {
   const tableState = useTableCrud<Employee>({
-    fetchUrl: 'http://localhost:3990/api/employees',
-    deleteUrl: 'http://localhost:3990/api/employees/delete',
+    fetchUrl: URL_API_EMPLOYEE.toString(),
+    deleteUrl: new URL('delete', URL_API_EMPLOYEE).toString(),
   })
 
   const {

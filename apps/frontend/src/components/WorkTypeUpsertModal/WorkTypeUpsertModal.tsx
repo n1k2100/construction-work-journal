@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Modal, Form, Input, Select, ColorPicker, message } from 'antd'
+
+import { UNIT_LABELS, URL_API_WORKS_TYPE } from '../../constants'
+
 import type { WorkType } from 'shared'
-import { UNIT_LABELS } from '../../constants'
 
 interface WorkTypeUpsertModalProps {
   open: boolean
@@ -37,14 +39,14 @@ export function WorkTypeUpsertModal({
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields()
+      const valuesHandled = { ...values, color: values['color'].slice(1) }
       setLoading(true)
 
-      const url = editingRecord
-        ? 'http://localhost:3990/api/works-type/edit'
-        : 'http://localhost:3990/api/works-type/create'
-
+      const url = new URL(editingRecord ? 'edit' : 'create', URL_API_WORKS_TYPE)
       const method = editingRecord ? 'PATCH' : 'POST'
-      const body = editingRecord ? { ...values, color: values['color'].slice(1), id: editingRecord.id } : values
+      const body = editingRecord
+        ? { ...valuesHandled, id: editingRecord.id }
+        : valuesHandled
 
       const response = await fetch(url, {
         method,

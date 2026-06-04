@@ -84,7 +84,7 @@ export function CrudTableLayout<T extends { id: React.Key }>({
             total,
             showSizeChanger: true,
           }}
-          onChange={handleTableChange}
+          onChange={handleTableChange as TableProps['onChange']}
         />
       </div>
 

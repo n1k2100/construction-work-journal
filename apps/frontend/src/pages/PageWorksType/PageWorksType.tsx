@@ -1,17 +1,18 @@
 import { useMemo } from 'react'
-import { Button, Flex, Space, Tooltip, type TableProps } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import type { WorkType } from 'shared'
+import { Button, Flex, Space, Tooltip, type TableProps } from 'antd'
+
 import { useTableCrud } from '../../hooks'
-import { CrudTableLayout } from '../../components/CrudTableLayout/CrudTableLayout'
 import { getRowNumberColumn } from '../../utils'
-import { UNIT_LABELS } from '../../constants'
-import { WorkTypeUpsertModal } from '../../components'
+import { UNIT_LABELS, URL_API_WORKS_TYPE } from '../../constants'
+import { CrudTableLayout, WorkTypeUpsertModal } from '../../components'
+
+import type { WorkType } from 'shared'
 
 export function PageWorksType() {
   const tableState = useTableCrud<WorkType>({
-    fetchUrl: 'http://localhost:3990/api/works-type',
-    deleteUrl: 'http://localhost:3990/api/works-type/delete',
+    fetchUrl: URL_API_WORKS_TYPE.toString(),
+    deleteUrl: new URL('delete', URL_API_WORKS_TYPE).toString(),
   })
 
   const {

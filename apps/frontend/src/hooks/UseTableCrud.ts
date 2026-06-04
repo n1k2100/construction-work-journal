@@ -1,9 +1,6 @@
+import type { FilterValue } from 'antd/es/table/interface'
+import type { TablePaginationConfig } from 'antd/lib/table'
 import { useState, useEffect, useCallback } from 'react'
-
-type Pagination = {
-  current: number
-  pageSize: number
-}
 
 type Sorter = {
   field: string
@@ -100,7 +97,11 @@ export function useTableCrud<T extends { id: React.Key }>({
   }, [current, pageSize, orderBy, loadData])
 
   const handleTableChange = useCallback(
-    (pagination: Pagination, sorter: Sorter) => {
+    (
+      pagination: TablePaginationConfig,
+      _fields: Record<string, FilterValue | null>,
+      sorter: Sorter,
+    ) => {
       setLoading(true)
 
       if (pagination.current && pagination.pageSize) {

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Modal, Form, Input, Select, message } from 'antd'
+
+import { POSITION_LABELS, URL_API_EMPLOYEE } from '../../constants'
+
 import type { Employee } from 'shared'
-import { POSITION_LABELS } from '../../constants'
 
 interface EmployeeUpsertModalProps {
   open: boolean
@@ -37,13 +39,13 @@ export function EmployeeUpsertModal({
       const values = await form.validateFields()
       setLoading(true)
 
-      const url = editingRecord
-        ? 'http://localhost:3990/api/employees/edit'
-        : 'http://localhost:3990/api/employees/create'
+      const url = new URL(
+        editingRecord ? 'edit' : 'create',
+        URL_API_EMPLOYEE,
+      ).toString()
 
       const method = editingRecord ? 'PATCH' : 'POST'
       const body = editingRecord ? { ...values, id: editingRecord.id } : values
-
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },

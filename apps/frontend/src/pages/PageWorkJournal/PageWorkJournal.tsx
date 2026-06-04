@@ -1,17 +1,19 @@
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { Button, Space, Tag, type TableProps } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
-import dayjs from 'dayjs'
-import type { Work } from 'shared'
+
 import { useTableCrud } from '../../hooks'
-import { CrudTableLayout, WorkUpsertModal } from '../../components'
 import { getRowNumberColumn } from '../../utils'
-import { POSITION_LABELS, UNIT_LABELS } from '../../constants'
+import { CrudTableLayout, WorkUpsertModal } from '../../components'
+import { POSITION_LABELS, UNIT_LABELS, URL_API_WORKS } from '../../constants'
+
+import type { Work } from 'shared'
 
 export function PageWorkJournal() {
   const tableState = useTableCrud<Work>({
-    fetchUrl: 'http://localhost:3990/api/works',
-    deleteUrl: 'http://localhost:3990/api/works/delete',
+    fetchUrl: URL_API_WORKS.toString(),
+    deleteUrl: new URL('delete', URL_API_WORKS).toString(),
   })
 
   const {

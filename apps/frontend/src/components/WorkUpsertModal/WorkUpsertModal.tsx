@@ -9,8 +9,15 @@ import {
   Space,
 } from 'antd'
 import dayjs from 'dayjs'
+
+import {
+  UNIT_LABELS,
+  URL_API_EMPLOYEE,
+  URL_API_WORKS,
+  URL_API_WORKS_TYPE,
+} from '../../constants'
+
 import type { Work, Employee, WorkType } from 'shared'
-import { UNIT_LABELS } from '../../constants'
 
 interface WorkUpsertModalProps {
   open: boolean
@@ -39,12 +46,8 @@ export function WorkUpsertModal({
     if (!open) return
 
     Promise.all([
-      fetch('http://localhost:3990/api/employees?take=1000').then((r) =>
-        r.json(),
-      ),
-      fetch('http://localhost:3990/api/works-type?take=1000').then((r) =>
-        r.json(),
-      ),
+      fetch(new URL('?take=1000', URL_API_EMPLOYEE)).then((r) => r.json()),
+      fetch(new URL('?take=1000', URL_API_WORKS_TYPE)).then((r) => r.json()),
     ])
       .then(([empRes, typeRes]) => {
         setEmployees(empRes.data || [])
@@ -56,7 +59,6 @@ export function WorkUpsertModal({
       })
   }, [open])
 
-  // Заполнение полей формы при редактировании
   useEffect(() => {
     if (open) {
       if (editingRecord) {
@@ -82,9 +84,10 @@ export function WorkUpsertModal({
         date: values.date.toISOString(),
       }
 
-      const url = editingRecord
-        ? 'http://localhost:3990/api/works/update'
-        : 'http://localhost:3990/api/works/create'
+      const url = new URL(
+        editingRecord ? 'edit' : 'create',
+        URL_API_WORKS,
+      ).toString()
 
       const method = editingRecord ? 'PATCH' : 'POST'
       const body = editingRecord
