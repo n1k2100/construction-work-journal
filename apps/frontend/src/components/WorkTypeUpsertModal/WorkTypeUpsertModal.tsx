@@ -44,7 +44,7 @@ export function WorkTypeUpsertModal({
         : 'http://localhost:3990/api/works-type/create'
 
       const method = editingRecord ? 'PATCH' : 'POST'
-      const body = editingRecord ? { ...values, id: editingRecord.id } : values
+      const body = editingRecord ? { ...values, color: values['color'].slice(1), id: editingRecord.id } : values
 
       const response = await fetch(url, {
         method,
