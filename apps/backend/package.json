@@ -1,0 +1,43 @@
+{
+  "name": "backend",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./src/main.ts",
+  "scripts": {
+    "build": "nest build",
+    "start": "nest start",
+    "start:dev": "nest start --watch --env-file=.env",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "database:seed": "tsx --env-file=.env ./prisma/seed.ts"
+  },
+  "type": "commonjs",
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.21",
+    "@nestjs/swagger": "^11.4.4",
+    "@nestjs/testing": "^11.1.24",
+    "@swc/cli": "^0.8.1",
+    "@swc/core": "^1.15.40",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "dotenv": "^17.4.2",
+    "prisma": "^7.8.0",
+    "swagger-ui-express": "^5.0.1",
+    "tsx": "^4.22.4",
+    "typescript": "~6.0.3"
+  },
+  "dependencies": {
+    "@construction-work-journal/prisma": "workspace:*",
+    "@nestjs/common": "^11.1.24",
+    "@nestjs/core": "^11.1.24",
+    "@nestjs/platform-express": "^11.1.24",
+    "@prisma/adapter-mariadb": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "dayjs": "^1.11.21",
+    "nestjs-zod": "^5.4.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "shared": "workspace:*",
+    "zod": "^4.4.3"
+  }
+}
