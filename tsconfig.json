@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "allowJs": false,
+    "checkJs": false,
+    "declaration": false,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "target": "esnext",
+    "types": ["node"]
+  },
+  "exclude": ["./node_modules/**/*"],
+  "include": ["./**/*"]
+}
