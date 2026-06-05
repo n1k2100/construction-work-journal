@@ -19,6 +19,7 @@ WORKDIR /usr/src/app
 COPY packages/ ./packages/
 COPY apps/backend/ ./apps/backend/
 
+RUN pnpm --filter @construction-work-journal/prisma generate
 RUN pnpm --filter shared build
 RUN pnpm --filter construction-work-journal-backend build
 RUN pnpm --filter construction-work-journal-backend --prod deploy /pruned --legacy

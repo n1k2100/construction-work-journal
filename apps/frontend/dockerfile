@@ -18,6 +18,7 @@ ARG VITE_BACKEND_API_URL
 ENV VITE_TITLE=$VITE_TITLE
 ENV VITE_BACKEND_API_URL=$VITE_BACKEND_API_URL
 
+RUN pnpm --filter @construction-work-journal/prisma generate
 RUN pnpm --filter shared build
 RUN pnpm --filter ./apps/frontend build
 

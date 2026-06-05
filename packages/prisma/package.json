@@ -6,6 +6,9 @@
     "./src/generated/*",
     "schema.prisma"
   ],
+  "scripts": {
+    "generate": "prisma generate"
+  },
   "exports": {
     "./schema": {
       "default": "./schema.prisma"
