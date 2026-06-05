@@ -1,0 +1,51 @@
+services:
+  db:
+    image: docker.io/library/mysql:8.4
+    container_name: construction-work-journal-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: construction-work-journal
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/dockerfile
+    container_name: construction-work-journal-backend
+    restart: always
+    ports:
+      - '3390:3390'
+    environment:
+      PORT: 3390
+      DATABASE_URL: mysql://mysql:mysql@db:3306/construction-work-journal
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/dockerfile
+      args:
+        - VITE_TITLE=Журнал работ
+        - VITE_BACKEND_API_URL=http://localhost:3390/api/
+    container_name: construction-work-journal-frontend
+    restart: always
+    ports:
+      - '3391:80'
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
