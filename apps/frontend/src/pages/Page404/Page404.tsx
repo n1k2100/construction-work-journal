@@ -1,9 +1,6 @@
 import { Button, Result } from 'antd'
 import { Link } from 'react-router-dom'
 
-/**
- * Неопределенная страница
- */
 export function Page404() {
   return (
     <Result
