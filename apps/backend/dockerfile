@@ -1,0 +1,36 @@
+FROM node:24-alpine AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+FROM base AS deps
+WORKDIR /usr/src/app
+
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY packages/prisma/package.json ./packages/prisma/
+COPY packages/shared/package.json ./packages/shared/
+COPY apps/backend/package.json ./apps/backend/
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+FROM deps AS build
+WORKDIR /usr/src/app
+
+COPY packages/ ./packages/
+COPY apps/backend/ ./apps/backend/
+
+RUN pnpm --filter shared build
+RUN pnpm --filter construction-work-journal-backend build
+RUN pnpm --filter construction-work-journal-backend --prod deploy /pruned --legacy
+
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY --from=build /pruned /app
+
+RUN if [ -f start.sh ]; then chmod +x start.sh; fi
+
+EXPOSE 3990
+
+CMD ["sh", "-c", "[ -f start.sh ] && ./start.sh || node dist/main.js"]
