@@ -3,23 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "files": [
-    "./schema.prisma"
+    "./src/generated/*",
+    "schema.prisma"
   ],
   "exports": {
     "./schema": {
       "default": "./schema.prisma"
     },
     "./client": {
-      "default": "./src/generated/prisma/client.ts",
-      "types": "./src/generated/prisma/client.ts"
+      "default": "./src/generated/prisma/client.js",
+      "types": "./src/generated/prisma/client.d.ts"
     },
     "./models": {
-      "default": "./src/generated/prisma/models.ts",
-      "types": "./src/generated/prisma/models.ts"
-    },
-    "./enums": {
-      "default": "./src/generated/prisma/enums.ts",
-      "types": "./src/generated/prisma/enums.ts"
+      "default": "./src/generated/prisma/models.js",
+      "types": "./src/generated/prisma/models.d.ts"
     }
   },
   "type": "module",
