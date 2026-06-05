@@ -3,13 +3,10 @@ import {
   PrismaClient,
   WorkType,
 } from '@construction-work-journal/prisma/client'
-import {
-  EmployeeCreateInput,
-  WorkCreateManyInput,
-  WorkTypeCreateInput,
-} from '@construction-work-journal/prisma/models'
 import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 import dayjs from 'dayjs'
+
+import type { Prisma } from '@construction-work-journal/prisma/client'
 
 const connectionUrl = process.env.DATABASE_URL
 
@@ -21,7 +18,7 @@ const adapter = new PrismaMariaDb(connectionUrl)
 const prisma = new PrismaClient({ adapter })
 
 async function createWorksType() {
-  const worksType: WorkTypeCreateInput[] = [
+  const worksType: Prisma.WorkTypeCreateInput[] = [
     {
       color: 'FF0000',
       title: 'Разработка грунта механизированным способом',
@@ -163,8 +160,7 @@ async function createWorksType() {
 }
 
 async function createEmployees() {
-  const employees: EmployeeCreateInput[] = [
-    // Исходные 8 записей
+  const employees: Prisma.EmployeeCreateInput[] = [
     { fullName: 'Иван Козлов', position: 'foreman' },
     { fullName: 'Александр Морозов', position: 'foreman' },
     { fullName: 'Пётр Иванов', position: 'foreman' },
@@ -173,7 +169,6 @@ async function createEmployees() {
     { fullName: 'Дмитрий Васильев', position: 'worker' },
     { fullName: 'Михаил Попов', position: 'worker' },
     { fullName: 'Сергей Фёдоров', position: 'worker' },
-    // Дополнительные 22 записи для достижения 30
     { fullName: 'Алексей Соколов', position: 'foreman' },
     { fullName: 'Роман Лебедев', position: 'foreman' },
     { fullName: 'Артем Кузнецов', position: 'worker' },
@@ -213,8 +208,7 @@ async function createEmployees() {
 }
 
 async function createWorks(worksType: WorkType[], employees: Employee[]) {
-  const works: WorkCreateManyInput[] = [
-    // Исходные 2 записи
+  const works: Prisma.WorkCreateManyInput[] = [
     {
       date: dayjs().subtract(2, 'M').subtract(15, 'D').toDate(),
       employeeId: employees[0].id,
@@ -227,7 +221,6 @@ async function createWorks(worksType: WorkType[], employees: Employee[]) {
       typeId: worksType[3].id,
       volume: 510,
     },
-    // Дополнительные 28 записей для достижения 30
     {
       date: dayjs().subtract(1, 'M').toDate(),
       employeeId: employees[1].id,
