@@ -6,7 +6,6 @@ allowBuilds:
   '@prisma/engines': true
   '@scarf/scarf': true
   '@swc/core': true
-  bson: set this to true or false
   es5-ext: true
   esbuild: true
   node-sass: true
