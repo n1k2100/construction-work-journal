@@ -172,14 +172,16 @@ export function WorkUpsertModal({
           />
         </Form.Item>
 
-        <Form.Item
-          name='volume'
-          label='Объем работ'
-          rules={[{ required: true, message: 'Введите объем' }]}
-        >
-          <Space.Compact>
+        <Form.Item label='Объем работ'>
+          <Space.Compact className='w-full'>
             {unitLabel && <Space.Addon>{unitLabel}</Space.Addon>}
-            <InputNumber min={0} className='w-full' placeholder='0' />
+            <Form.Item
+              name='volume'
+              noStyle
+              rules={[{ required: true, message: 'Введите объем' }]}
+            >
+              <InputNumber min={0} className='w-full' placeholder='0' />
+            </Form.Item>
           </Space.Compact>
         </Form.Item>
       </Form>
