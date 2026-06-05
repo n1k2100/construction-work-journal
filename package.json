@@ -34,29 +34,19 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "^11.5.0",
+      "version": "11.5.0",
       "onFail": "download"
     }
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.3.0",
-    "@types/node": "^24.12.4",
-    "dayjs": "^1.11.21",
     "eslint": "^10.4.1",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-jsonc": "^3.2.0",
     "eslint-plugin-perfectionist": "^5.9.0",
-    "frontend": "2.0.0-alpha.4",
     "jiti": "^2.7.0",
     "jsonc-eslint-parser": "^3.1.0",
     "prettier": "^3.8.3",
-    "tailwindcss": "^4.3.0",
     "typescript-eslint": "^8.60.0"
-  },
-  "dependencies": {
-    "@ant-design/icons": "^6.2.5",
-    "antd": "^6.4.3",
-    "react-router-dom": "^7.16.0"
   }
 }
