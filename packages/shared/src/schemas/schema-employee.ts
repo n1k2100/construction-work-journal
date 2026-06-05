@@ -1,8 +1,6 @@
-import z from 'zod'
+import { z } from 'zod'
 
-import { paginationSchema } from './schema-base.ts'
-
-import type { EmployeePosition } from '@construction-work-journal/prisma/enums'
+import type { EmployeePosition } from '@construction-work-journal/prisma/client'
 import type { output } from 'zod'
 
 export const EmployeeSchema = z.object({

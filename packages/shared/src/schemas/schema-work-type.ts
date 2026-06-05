@@ -1,5 +1,5 @@
-import { WorkVolumeUnit } from '@construction-work-journal/prisma/enums'
-import z, { type output } from 'zod'
+import { WorkVolumeUnit } from '@construction-work-journal/prisma/client'
+import { z, type output } from 'zod'
 
 export const WorkTypeSchema = z.object({
   color: z.hex().max(6).min(6),

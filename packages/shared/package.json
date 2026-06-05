@@ -1,18 +1,22 @@
 {
   "name": "shared",
   "type": "module",
-  "main": "./src/index.ts",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "private": true,
   "version": "1.0.0",
-  "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "import": "./src/index.ts",
-      "require": "./src/index.ts"
-    }
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
   },
   "dependencies": {
     "@construction-work-journal/prisma": "workspace:*",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "terser": "^5.48.0",
+    "tsup": "^8.5.1"
   }
 }

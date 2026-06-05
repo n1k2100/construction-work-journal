@@ -1,4 +1,4 @@
-import z from 'zod'
+import { z } from 'zod'
 
 import { paginationSchema } from './schema-base.ts'
 import { EmployeeSchema } from './schema-employee.ts'
